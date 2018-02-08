@@ -599,6 +599,7 @@ eval OP_CHECKMULTISIG =
 
 eval OP_CHECKSIGVERIFY      = eval OP_CHECKSIG      >> eval OP_VERIFY
 eval OP_CHECKMULTISIGVERIFY = eval OP_CHECKMULTISIG >> eval OP_VERIFY
+eval OP_CHECKCRYPTOCONDITIONVERIFY = error "eval OP_CHECKCRYPTOCONDITIONVERIFY undefined"
 
 eval op = case constValue op of
     Just sv -> minimalPushEnforcer op >> pushStack sv

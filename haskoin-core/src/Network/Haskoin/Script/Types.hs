@@ -165,6 +165,7 @@ data ScriptOp
     | OP_CHECKSIGVERIFY
     | OP_CHECKMULTISIG
     | OP_CHECKMULTISIGVERIFY
+    | OP_CHECKCRYPTOCONDITIONVERIFY
 
       -- Expansion
     | OP_NOP1 | OP_NOP2 | OP_NOP3 | OP_NOP4 | OP_NOP5
@@ -315,6 +316,7 @@ instance Serialize ScriptOp where
             | op == 0xad = return OP_CHECKSIGVERIFY
             | op == 0xae = return OP_CHECKMULTISIG
             | op == 0xaf = return OP_CHECKMULTISIGVERIFY
+            | op == 0xcd = return OP_CHECKCRYPTOCONDITIONVERIFY
 
             -- More NOPs
             | op == 0xb0 = return OP_NOP1
@@ -478,6 +480,7 @@ instance Serialize ScriptOp where
         OP_CHECKSIGVERIFY    -> putWord8 0xad
         OP_CHECKMULTISIG     -> putWord8 0xae
         OP_CHECKMULTISIGVERIFY -> putWord8 0xaf
+        OP_CHECKCRYPTOCONDITIONVERIFY -> putWord8 0xcd
 
         -- More NOPs
         OP_NOP1              -> putWord8 0xb0
