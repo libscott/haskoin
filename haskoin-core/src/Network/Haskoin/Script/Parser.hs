@@ -46,12 +46,18 @@ import           Data.Function                  (on)
 import           Data.List                      (sortBy)
 import           Data.Serialize                 (decode, encode)
 import           Data.String.Conversions        (cs)
+import           Network.CryptoConditions
 import           Network.Haskoin.Crypto.Base58
 import           Network.Haskoin.Crypto.Hash
 import           Network.Haskoin.Crypto.Keys
 import           Network.Haskoin.Script.SigHash
 import           Network.Haskoin.Script.Types
 import           Network.Haskoin.Util
+
+
+instance Read Condition where
+  readsPrec = error "Read Condition not implemented"
+
 
 -- | Data type describing standard transaction output scripts. Output scripts
 -- provide the conditions that must be fulfilled for someone to spend the
@@ -67,6 +73,7 @@ data ScriptOutput =
                     }
       -- | Pay to a script hash.
     | PayScriptHash { getOutputHash     :: !Hash160 }
+    | PayCondition  { getCondition :: !Condition }
       -- | Provably unspendable data carrier.
     | DataCarrier { getOutputData :: !ByteString }
     deriving (Eq, Show)
@@ -165,6 +172,7 @@ encodeOutput s = Script $ case s of
     -- Pay to Script Hash Address
     (PayScriptHash h) ->
         [ OP_HASH160, opPushData $ encode h, OP_EQUAL]
+    (PayCondition cond) -> [opPushData $ encodeCondition cond, OP_CHECKCRYPTOCONDITIONVERIFY]
     -- Provably unspendable output
     (DataCarrier d) -> [OP_RETURN, opPushData d]
 
@@ -184,6 +192,8 @@ decodeOutput s = case scriptOps s of
     -- Pay to Script Hash
     [OP_HASH160, OP_PUSHDATA bs _, OP_EQUAL] ->
         PayScriptHash <$> decode  bs
+    -- Pay to Crypto-Condition
+    [OP_PUSHDATA bs _, OP_CHECKCRYPTOCONDITIONVERIFY] -> PayCondition <$> readCondition bs
     -- Provably unspendable data carrier output
     [OP_RETURN, OP_PUSHDATA bs _] -> Right $ DataCarrier bs
     -- Pay to MultiSig Keys
@@ -252,6 +262,8 @@ data SimpleInput
                   }
       -- | Spend the coins of a PayMulSig output.
     | SpendMulSig { getInputMulSigKeys :: ![TxSignature] }
+      -- | Spend the coins of a CryptoCondition output.
+    | SpendCondition { getInputCondition  :: !Condition }
     deriving (Eq, Show, Read)
 
 instance NFData SimpleInput where

@@ -4,6 +4,7 @@ packages:
 - haskoin-core
 - haskoin-node
 - haskoin-wallet
+- ../cryptoconditions-hs
 extra-deps:
 - daemons-0.2.1
 - pbkdf-1.1.1.1
