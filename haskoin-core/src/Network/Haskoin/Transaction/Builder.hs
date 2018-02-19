@@ -299,6 +299,8 @@ sigKeys so rdmM keys =
             map fst $ take r $ filter ((`elem` ps) . snd) zipKeys
         (PayScriptHash _, Just rdm) ->
             sigKeys rdm Nothing keys
+        (PayCondition _, _) ->
+            pure []
         _ -> Left "sigKeys: Could not decode output script"
   where
     zipKeys = zip keys (map derivePubKey keys)

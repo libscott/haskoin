@@ -172,7 +172,7 @@ encodeOutput s = Script $ case s of
     -- Pay to Script Hash Address
     (PayScriptHash h) ->
         [ OP_HASH160, opPushData $ encode h, OP_EQUAL]
-    (PayCondition cond) -> [opPushData $ encodeCondition cond, OP_CHECKCRYPTOCONDITIONVERIFY]
+    (PayCondition cond) -> [opPushData $ encodeCondition cond, OP_CHECKCRYPTOCONDITION]
     -- Provably unspendable output
     (DataCarrier d) -> [OP_RETURN, opPushData d]
 
@@ -193,7 +193,7 @@ decodeOutput s = case scriptOps s of
     [OP_HASH160, OP_PUSHDATA bs _, OP_EQUAL] ->
         PayScriptHash <$> decode  bs
     -- Pay to Crypto-Condition
-    [OP_PUSHDATA bs _, OP_CHECKCRYPTOCONDITIONVERIFY] -> PayCondition <$> readCondition bs
+    [OP_PUSHDATA bs _, OP_CHECKCRYPTOCONDITION] -> PayCondition <$> readCondition bs
     -- Provably unspendable data carrier output
     [OP_RETURN, OP_PUSHDATA bs _] -> Right $ DataCarrier bs
     -- Pay to MultiSig Keys
