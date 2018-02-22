@@ -46,7 +46,7 @@ import           Data.Function                  (on)
 import           Data.List                      (sortBy)
 import           Data.Serialize                 (decode, encode)
 import           Data.String.Conversions        (cs)
-import           Network.CryptoConditions
+import           Network.Komodo.CryptoConditions
 import           Network.Haskoin.Crypto.Base58
 import           Network.Haskoin.Crypto.Hash
 import           Network.Haskoin.Crypto.Keys
