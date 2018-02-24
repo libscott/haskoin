@@ -35,6 +35,7 @@ module Network.Haskoin.Crypto
 , decodePrvKey
 , prvKeyPutMonad
 , prvKeyGetMonad
+, prvKeySecKey
 , fromWif
 , toWif
 , tweakPrvKeyC
