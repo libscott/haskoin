@@ -193,7 +193,7 @@ decodeOutput s = case scriptOps s of
     [OP_HASH160, OP_PUSHDATA bs _, OP_EQUAL] ->
         PayScriptHash <$> decode  bs
     -- Pay to Crypto-Condition
-    [OP_PUSHDATA bs _, OP_CHECKCRYPTOCONDITION] -> PayCondition <$> readCondition bs
+    [OP_PUSHDATA bs _, OP_CHECKCRYPTOCONDITION] -> PayCondition <$> decodeCondition bs
     -- Provably unspendable data carrier output
     [OP_RETURN, OP_PUSHDATA bs _] -> Right $ DataCarrier bs
     -- Pay to MultiSig Keys
