@@ -37,6 +37,7 @@ library
     hs-source-dirs:      src
     exposed-modules:     Network.Haskoin.Util
                          Network.Haskoin.Crypto
+                         Network.Haskoin.Crypto.Keys
                          Network.Haskoin.Network
                          Network.Haskoin.Script
                          Network.Haskoin.Transaction
@@ -53,7 +54,6 @@ library
                          Network.Haskoin.Test.Block
     other-modules:       Network.Haskoin.Crypto.Hash
                          Network.Haskoin.Crypto.Base58
-                         Network.Haskoin.Crypto.Keys
                          Network.Haskoin.Crypto.ExtendedKeys
                          Network.Haskoin.Crypto.ECDSA
                          Network.Haskoin.Crypto.Mnemonic
