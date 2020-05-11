@@ -56,6 +56,8 @@ library:
     - Haskoin.Network
     - Haskoin.Script
     - Haskoin.Transaction
+    - Haskoin.Transaction.Builder
+    - Haskoin.Transaction.Builder.Sign
     - Haskoin.Util
 tests:
   spec:
