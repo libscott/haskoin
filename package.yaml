@@ -44,8 +44,13 @@ dependencies:
   transformers: ">= 0.5.6.2"
   unordered-containers: ">= 0.2.10.0"
   vector: ">= 0.12.1.2"
+  hspec: ">= 2.7.1"
+  HUnit: ">= 1.6.0.0"
+  QuickCheck: ">= 2.13.2"
 library:
-  source-dirs: src
+  source-dirs:
+    - src
+    - test
   exposed-modules:
     - Haskoin
     - Haskoin.Address
@@ -59,9 +64,10 @@ library:
     - Haskoin.Transaction.Builder
     - Haskoin.Transaction.Builder.Sign
     - Haskoin.Util
+    - Haskoin.Test
 tests:
   spec:
-    main: Spec.hs
+    main: Main.hs
     source-dirs:
       - test
       - src
